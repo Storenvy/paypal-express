@@ -40,6 +40,9 @@ module Paypal
           "PAYMENTREQUEST_#{index}_SHIPTOCOUNTRYCODE" => self.address[:countrycode],
           "PAYMENTREQUEST_#{index}_SHIPTOPHONENUM"    => self.address[:phonenum],
           "PAYMENTREQUEST_#{index}_SHIPTOZIP"         => self.address[:zip],
+          
+          # 3rd-party Recipient
+          "PAYMENTREQUEST_#{index}_SELLERPAYPALACCOUNTID" => self.seller_paypal_account_id,
 
           # NOTE:
           #  notify_url works only when DoExpressCheckoutPayment called.
