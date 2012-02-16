@@ -1,7 +1,8 @@
 module Paypal
   module Payment
     class Request < Base
-      attr_optional :action, :currency_code, :description, :notify_url, :billing_type, :billing_agreement_description, :billing_agreement_id
+      attr_optional :action, :currency_code, :description, :notify_url, :billing_type, 
+        :billing_agreement_description, :billing_agreement_id, :seller_paypal_account_id, :request_id, :address
       attr_accessor :amount, :items
 
       def initialize(attributes = {})
@@ -29,6 +30,17 @@ module Paypal
           :"PAYMENTREQUEST_#{index}_SHIPPINGAMT" => Util.formatted_amount(self.amount.shipping),
           :"PAYMENTREQUEST_#{index}_CURRENCYCODE" => self.currency_code,
           :"PAYMENTREQUEST_#{index}_DESC" => self.description,
+          
+          #Address Fields
+          "PAYMENTREQUEST_#{index}_SHIPTONAME"        => self.address[:name],
+          "PAYMENTREQUEST_#{index}_SHIPTOSTREET"      => self.address[:street],
+          "PAYMENTREQUEST_#{index}_SHIPTOSTREET2"     => self.address[:street2],
+          "PAYMENTREQUEST_#{index}_SHIPTOCITY"        => self.address[:city],
+          "PAYMENTREQUEST_#{index}_SHIPTOSTATE"       => self.address[:state],
+          "PAYMENTREQUEST_#{index}_SHIPTOCOUNTRYCODE" => self.address[:countrycode],
+          "PAYMENTREQUEST_#{index}_SHIPTOPHONENUM"    => self.address[:phonenum],
+          "PAYMENTREQUEST_#{index}_SHIPTOZIP"         => self.address[:zip],
+
           # NOTE:
           #  notify_url works only when DoExpressCheckoutPayment called.
           #  recurring payment doesn't support dynamic notify_url.

@@ -9,10 +9,16 @@ module Paypal
           :RETURNURL => return_url,
           :CANCELURL => cancel_url
         }
+        
+        options.each do |opt, val|
+          params[opt.upcase] = formatted_value(val)
+        end
+        
         if options[:no_shipping]
           params[:REQCONFIRMSHIPPING] = 0
           params[:NOSHIPPING] = 1
         end
+        
         Array(payment_requests).each_with_index do |payment_request, index|
           params.merge! payment_request.to_params(index)
         end
