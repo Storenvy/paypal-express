@@ -1,8 +1,9 @@
 module Paypal
   module Payment
     class Request < Base
-      attr_optional :action, :currency_code, :description, :notify_url, :billing_type, 
-        :billing_agreement_description, :billing_agreement_id, :seller_paypal_account_id, :request_id, :address
+      attr_optional :action, :currency_code, :description, :notify_url, :billing_type,
+        :billing_agreement_description, :billing_agreement_id, :seller_paypal_account_id,
+        :payment_request_id, :address
       attr_accessor :amount, :items
 
       def initialize(attributes = {})
@@ -12,7 +13,8 @@ module Paypal
           Common::Amount.new(
             :total => attributes[:amount],
             :tax => attributes[:tax_amount],
-            :shipping => attributes[:shipping_amount]
+            :shipping => attributes[:shipping_amount],
+            :item => attributes[:subtotal]
           )
         end
         @items = []
@@ -43,6 +45,8 @@ module Paypal
           
           # 3rd-party Recipient
           "PAYMENTREQUEST_#{index}_SELLERPAYPALACCOUNTID" => self.seller_paypal_account_id,
+
+          "PAYMENTREQUEST_#{index}_PAYMENTREQUESTID" => self.payment_request_id,
 
           # NOTE:
           #  notify_url works only when DoExpressCheckoutPayment called.
