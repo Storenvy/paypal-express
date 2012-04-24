@@ -23,7 +23,7 @@ module Paypal
         instance_variable_get(key) == other.instance_variable_get(key)
       end
     end
-    
+
     def formatted_value(val)
       case val
       when TrueClass then '1'

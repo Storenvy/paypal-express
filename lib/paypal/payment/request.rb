@@ -32,7 +32,7 @@ module Paypal
           :"PAYMENTREQUEST_#{index}_SHIPPINGAMT" => Util.formatted_amount(self.amount.shipping),
           :"PAYMENTREQUEST_#{index}_CURRENCYCODE" => self.currency_code,
           :"PAYMENTREQUEST_#{index}_DESC" => self.description,
-          
+
           #Address Fields
           "PAYMENTREQUEST_#{index}_SHIPTONAME"        => self.address[:name],
           "PAYMENTREQUEST_#{index}_SHIPTOSTREET"      => self.address[:street],
@@ -42,7 +42,7 @@ module Paypal
           "PAYMENTREQUEST_#{index}_SHIPTOCOUNTRYCODE" => self.address[:countrycode],
           "PAYMENTREQUEST_#{index}_SHIPTOPHONENUM"    => self.address[:phonenum],
           "PAYMENTREQUEST_#{index}_SHIPTOZIP"         => self.address[:zip],
-          
+
           # 3rd-party Recipient
           "PAYMENTREQUEST_#{index}_SELLERPAYPALACCOUNTID" => self.seller_paypal_account_id,
 
