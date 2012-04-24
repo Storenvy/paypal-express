@@ -20,7 +20,7 @@ module Paypal
       attr_accessor *@@attribute_mapping.values
       attr_accessor :shipping_options_is_default, :success_page_redirect_requested, :insurance_option_selected
       attr_accessor :amount, :description, :ship_to, :payer, :recurring, :billing_agreement, :refund
-      attr_accessor :payment_responses, :payment_info, :items
+      attr_accessor :payment_responses, :payment_info, :items, :transaction
 
       def initialize(attributes = {})
         attrs = attributes.dup
