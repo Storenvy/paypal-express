@@ -142,6 +142,14 @@ module Paypal
             }
           )
         end
+        if attrs[:TRANSACTIONID]
+          @transaction = Payment::Response::Transaction.new(
+            :transaction_id => attrs.delete(:TRANSACTIONID),
+            :timestamp => attrs.delete(:TIMESTAMP),
+            :email => attrs.delete(:EMAIL),
+            :status => attrs.delete(:STATUS)
+          )
+        end
 
         # payment_responses
         payment_responses = []
