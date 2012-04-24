@@ -155,6 +155,15 @@ module Paypal
         Response.new response
       end
 
+      def search(transaction_id, start_date)
+        params = {
+          :TRANSACTIONID => transaction_id,
+          :STARTDATE     => start_date
+        }
+        response = self.request :TransactionSearch, params
+        Response.new response
+      end
+
     end
   end
 end
