@@ -20,7 +20,7 @@ module Paypal
       attr_accessor *@@attribute_mapping.values
       attr_accessor :shipping_options_is_default, :success_page_redirect_requested, :insurance_option_selected
       attr_accessor :amount, :description, :ship_to, :payer, :recurring, :billing_agreement, :refund
-      attr_accessor :payment_responses, :payment_info, :items, :transaction
+      attr_accessor :payment_responses, :payment_info, :items, :transactions
 
       def initialize(attributes = {})
         attrs = attributes.dup
@@ -142,14 +142,6 @@ module Paypal
             }
           )
         end
-        if attrs[:TRANSACTIONID]
-          @transaction = Payment::Response::Transaction.new(
-            :transaction_id => attrs.delete(:TRANSACTIONID),
-            :timestamp => attrs.delete(:TIMESTAMP),
-            :email => attrs.delete(:EMAIL),
-            :status => attrs.delete(:STATUS)
-          )
-        end
 
         # payment_responses
         payment_responses = []
@@ -182,17 +174,32 @@ module Paypal
           Payment::Response::Info.new _attrs_
         end
 
-        # payment_info
-        items = []
-        attrs.keys.each do |_attr_|
-          key, index = _attr_.to_s.scan(/^L_(.+?)(\d+)$/).flatten
-          if index
-            items[index.to_i] ||= {}
-            items[index.to_i][key.to_sym] = attrs.delete(_attr_)
+        if attrs.has_key? :L_TRANSACTIONID0
+          # transaction responses from search
+          transactions = []
+          attrs.keys.each do |_attr_|
+            key, index = _attr_.to_s.scan(/^L_(.+?)(\d+)$/).flatten
+            if index
+              transactions[index.to_i] ||= {}
+              transactions[index.to_i][key.to_sym] = attrs.delete(_attr_)
+            end
           end
-        end
-        @items = items.collect do |_attrs_|
-          Payment::Response::Item.new _attrs_
+          @transactions = transactions.collect do |_attrs_|
+            Payment::Response::Transaction.new _attrs_
+          end
+        else
+          # payment_info
+          items = []
+          attrs.keys.each do |_attr_|
+            key, index = _attr_.to_s.scan(/^L_(.+?)(\d+)$/).flatten
+            if index
+              items[index.to_i] ||= {}
+              items[index.to_i][key.to_sym] = attrs.delete(_attr_)
+            end
+          end
+          @items = items.collect do |_attrs_|
+            Payment::Response::Item.new _attrs_
+          end
         end
 
         # remove duplicated parameters
