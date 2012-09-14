@@ -3,7 +3,7 @@ module Paypal
     class Request < Base
       attr_optional :action, :currency_code, :description, :notify_url, :billing_type,
         :billing_agreement_description, :billing_agreement_id, :seller_paypal_account_id,
-        :payment_request_id, :address, :invoice_numbers, :note
+        :payment_request_id, :address, :invoice_number, :note
       attr_accessor :amount, :items
 
       def initialize(attributes = {})
@@ -44,7 +44,7 @@ module Paypal
           "PAYMENTREQUEST_#{index}_SHIPTOPHONENUM"    => self.address[:phonenum],
           "PAYMENTREQUEST_#{index}_SHIPTOZIP"         => self.address[:zip],
 
-          "PAYMENTREQUEST_#{index}_INVNUM" => self.invoice_number,
+          "PAYMENTREQUEST_#{index}_INVNUM"        => self.invoice_number,
           "PAYMENTREQUEST_#{index}_NOTETEXT"      => self.note,
 
           # 3rd-party Recipient
