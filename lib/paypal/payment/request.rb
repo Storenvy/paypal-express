@@ -72,7 +72,7 @@ module Paypal
 
       def items_amount
         self.items.inject(0.0) do |total, item|
-          total += item.quantity * item.amount.to_f
+          total += ((item.quantity * item.amount.to_f) * 100).ceil / 100
         end
       end
     end
