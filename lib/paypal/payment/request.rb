@@ -34,23 +34,13 @@ module Paypal
           :"PAYMENTREQUEST_#{index}_DESC" => self.description,
           :"PAYMENTREQUEST_#{index}_NOTETEXT" => self.note,
 
-          #Address Fields
-          "PAYMENTREQUEST_#{index}_SHIPTONAME"        => self.address[:name],
-          "PAYMENTREQUEST_#{index}_SHIPTOSTREET"      => self.address[:street],
-          "PAYMENTREQUEST_#{index}_SHIPTOSTREET2"     => self.address[:street2],
-          "PAYMENTREQUEST_#{index}_SHIPTOCITY"        => self.address[:city],
-          "PAYMENTREQUEST_#{index}_SHIPTOSTATE"       => self.address[:state],
-          "PAYMENTREQUEST_#{index}_SHIPTOCOUNTRYCODE" => self.address[:countrycode],
-          "PAYMENTREQUEST_#{index}_SHIPTOPHONENUM"    => self.address[:phonenum],
-          "PAYMENTREQUEST_#{index}_SHIPTOZIP"         => self.address[:zip],
-
-          "PAYMENTREQUEST_#{index}_INVNUM"        => self.invoice_number,
-          "PAYMENTREQUEST_#{index}_NOTETEXT"      => self.note,
+          :"PAYMENTREQUEST_#{index}_INVNUM"        => self.invoice_number,
+          :"PAYMENTREQUEST_#{index}_NOTETEXT"      => self.note,
 
           # 3rd-party Recipient
-          "PAYMENTREQUEST_#{index}_SELLERPAYPALACCOUNTID" => self.seller_paypal_account_id,
+          :"PAYMENTREQUEST_#{index}_SELLERPAYPALACCOUNTID" => self.seller_paypal_account_id,
 
-          "PAYMENTREQUEST_#{index}_PAYMENTREQUESTID" => self.payment_request_id,
+          :"PAYMENTREQUEST_#{index}_PAYMENTREQUESTID" => self.payment_request_id,
 
           # NOTE:
           #  notify_url works only when DoExpressCheckoutPayment called.
@@ -61,6 +51,19 @@ module Paypal
         }.delete_if do |k, v|
           v.blank?
         end
+
+        if self.address.present?
+          #Address Fields
+          params[:"PAYMENTREQUEST_#{index}_SHIPTONAME"]        = self.address[:name]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOSTREET"]      = self.address[:street]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOSTREET2"]     = self.address[:street2]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOCITY"]        = self.address[:city]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOSTATE"]       = self.address[:state]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOCOUNTRYCODE"] = self.address[:countrycode]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOPHONENUM"]    = self.address[:phonenum]
+          params[:"PAYMENTREQUEST_#{index}_SHIPTOZIP"]         = self.address[:zip]
+        end
+
         if self.items.present?
           params[:"PAYMENTREQUEST_#{index}_ITEMAMT"] = Util.formatted_amount(self.amount.item)
           self.items.each_with_index do |item, item_index|

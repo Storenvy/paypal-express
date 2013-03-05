@@ -69,16 +69,18 @@ describe Paypal::Payment::Request do
         :PAYMENTREQUEST_0_TAXAMT => "0.40",
         :PAYMENTREQUEST_0_SHIPPINGAMT => "1.50",
         :PAYMENTREQUEST_0_CURRENCYCODE => :JPY,
-        :PAYMENTREQUEST_0_DESC => "Instant Payment Request", 
+        :PAYMENTREQUEST_0_DESC => "Instant Payment Request",
         :PAYMENTREQUEST_0_NOTIFYURL => "http://merchant.example.com/notify",
-        :PAYMENTREQUEST_0_ITEMAMT => "23.80",
+        :PAYMENTREQUEST_0_ITEMAMT => "0.00",
         :L_PAYMENTREQUEST_0_NAME0 => "Item1",
         :L_PAYMENTREQUEST_0_DESC0 => "Awesome Item 1!",
         :L_PAYMENTREQUEST_0_AMT0 => "10.25",
+        :L_PAYMENTREQUEST_0_TAXAMT0 => "0.00",
         :L_PAYMENTREQUEST_0_QTY0 => 2,
         :L_PAYMENTREQUEST_0_NAME1 => "Item2",
         :L_PAYMENTREQUEST_0_DESC1 => "Awesome Item 2!",
         :L_PAYMENTREQUEST_0_AMT1 => "1.10",
+        :L_PAYMENTREQUEST_0_TAXAMT1 => "0.00",
         :L_PAYMENTREQUEST_0_QTY1 => 3
       }
     end

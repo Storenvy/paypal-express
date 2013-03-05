@@ -23,7 +23,9 @@ describe Paypal::Payment::Response::Info do
       :FEEAMT => '0.85',
       :TAXAMT => '0.00',
       :RECEIPTID => '12345',
-      :SECUREMERCHANTACCOUNTID => '123456789'
+      :SECUREMERCHANTACCOUNTID => '123456789',
+      :SELLERPAYPALACCOUNTID => 'seller@shop.example.com',
+      :PAYMENTREQUESTID => 'NDSFBSKJBSGR'
     }
   end
 

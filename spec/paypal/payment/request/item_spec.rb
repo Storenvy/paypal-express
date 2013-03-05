@@ -6,8 +6,10 @@ describe Paypal::Payment::Request::Item do
       :name => 'Name',
       :description => 'Description',
       :amount => 10,
+      :tax => 0.10,
       :quantity => 5,
-      :category => :Digital
+      :category => :Digital,
+      :number => 5
     )
   end
 
@@ -17,8 +19,10 @@ describe Paypal::Payment::Request::Item do
         :L_PAYMENTREQUEST_1_NAME0 => 'Name',
         :L_PAYMENTREQUEST_1_DESC0 => 'Description',
         :L_PAYMENTREQUEST_1_AMT0 => '10.00',
+        :L_PAYMENTREQUEST_1_TAXAMT0 => '0.10',
         :L_PAYMENTREQUEST_1_QTY0 => 5,
-        :L_PAYMENTREQUEST_1_ITEMCATEGORY0 => :Digital
+        :L_PAYMENTREQUEST_1_ITEMCATEGORY0 => :Digital,
+        :L_PAYMENTREQUEST_1_NUMBER0 => 5
       }
     end
   end
