@@ -266,6 +266,23 @@ describe Paypal::Express::Request do
         :PAYMENTREQUEST_0_TAXAMT => "0.00",
         :PAYMENTREQUEST_0_SHIPPINGAMT => "0.00"
       }
+      instance._sent_params_.should_not have_key(:BUTTONSOURCE)
+    end
+
+    it 'should call DoExpressCheckoutPayment with button source tracking code' do
+      expect do
+        instance.checkout! 'token', 'payer_id', instant_payment_request, :button_source => 'button_source'
+      end.to request_to nvp_endpoint, :post
+      instance._method_.should == :DoExpressCheckoutPayment
+      instance._sent_params_.should == {
+        :PAYERID => 'payer_id',
+        :TOKEN => 'token',
+        :PAYMENTREQUEST_0_DESC => 'Instant Payment Request',
+        :PAYMENTREQUEST_0_AMT => '1000.00',
+        :PAYMENTREQUEST_0_TAXAMT => "0.00",
+        :PAYMENTREQUEST_0_SHIPPINGAMT => "0.00",
+        :BUTTONSOURCE => 'button_source'
+      }
     end
 
     context "with many items" do
