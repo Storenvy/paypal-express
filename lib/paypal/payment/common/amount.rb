@@ -2,7 +2,7 @@ module Paypal
   module Payment
     module Common
       class Amount < Base
-        attr_optional :total, :item, :fee, :handing, :insurance, :ship_disc, :shipping, :tax, :gross, :net
+        attr_optional :total, :item, :fee, :handing, :insurance, :ship_disc, :shipping, :tax, :gross, :net, :handling
 
         def numeric_attribute?(key)
           true

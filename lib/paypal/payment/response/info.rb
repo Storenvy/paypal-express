@@ -32,7 +32,8 @@ module Paypal
         @amount = Common::Amount.new(
           :total => attrs.delete(:AMT),
           :fee => attrs.delete(:FEEAMT),
-          :tax => attrs.delete(:TAXAMT)
+          :tax => attrs.delete(:TAXAMT),
+          :handling => attrs.delete(:HANDLINGAMT),
         )
 
         # warn ignored params
