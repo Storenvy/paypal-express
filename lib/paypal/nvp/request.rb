@@ -42,7 +42,13 @@ module Paypal
       private
 
       def post(method, params)
-        RestClient.post(self.class.endpoint, common_params.merge(params).merge(:METHOD => method))
+        all_params = common_params.merge(params).merge(:METHOD => method)
+
+        # RestClient has non standard serialization of hashes to exclude an '=' when there is a nil value. This
+        # causes issues for the paypal-express endpoint parser which then adds multiple keys together
+        params_without_nil_values = all_params.transform_values { |value| value.nil? ? '' : value }
+
+        RestClient.post(self.class.endpoint, params_without_nil_values)
       end
 
       def handle_response
