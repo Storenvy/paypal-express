@@ -24,11 +24,13 @@ module Paypal
       end
 
       def common_params
+        subject = self.subject || ''
+        
         {
           :USER => self.username,
           :PWD => self.password,
           :SIGNATURE => self.signature,
-          :SUBJECT => self.subject,
+          :SUBJECT => subject,
           :VERSION => self.version
         }
       end
